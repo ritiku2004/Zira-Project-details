@@ -1,0 +1,17 @@
+@startuml
+node "User Device" {
+  component Browser
+}
+node "Vercel / Hosting" {
+  component "Next.js App"
+  component "Hono Routes"
+}
+node "Appwrite Cloud" {
+  component "Appwrite - Database"
+  component "Appwrite - Storage"
+}
+
+Browser --> "Next.js App"
+"Next.js App" --> "Hono Routes"
+"Hono Routes" --> "Appwrite - Database"
+@enduml

@@ -1,0 +1,5 @@
+flowchart TB
+  UserDevice["User Device"] --> NextApp["Next.js App"]
+  NextApp --> Hono["Hono Routes"]
+  Hono --> Appwrite["Appwrite DB / Storage"]
+  NextApp --> Appwrite

@@ -1,0 +1,15 @@
+@startuml
+actor User
+participant Browser
+participant "Next.js App" as App
+participant "Hono Route" as API
+participant "Appwrite" as AW
+
+User -> Browser: submit credentials
+Browser -> App: POST /api/auth/login
+App -> API: validate request
+API -> AW: authenticate (Appwrite)
+AW --> API: session/token
+API --> App: success + token
+App --> Browser: set cookie / redirect
+@enduml

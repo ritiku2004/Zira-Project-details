@@ -1,0 +1,30 @@
+@startuml
+class Workspace {
+  +id: string
+  +name: string
+  +ownerId: string
+}
+class Project {
+  +id: string
+  +workspaceId: string
+  +name: string
+}
+class Task {
+  +id: string
+  +projectId: string
+  +title: string
+  +status: string
+  +assigneeId: string
+}
+class Member {
+  +id: string
+  +workspaceId: string
+  +userId: string
+  +role: string
+}
+
+Workspace "1" -- "*" Project
+Project "1" -- "*" Task
+Workspace "1" -- "*" Member
+Member "*" -- "1" Task : assigned
+@enduml

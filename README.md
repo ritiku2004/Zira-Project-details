@@ -218,13 +218,80 @@ Browser --> "Next.js App"
 
 Mermaid option (inline docs):
 
-You can also embed quick diagrams using Mermaid in Markdown (README or other docs). Example component diagram in Mermaid:
+You can also embed quick diagrams using Mermaid in Markdown (README or other docs). Below are Mermaid versions of the key diagrams — these should render directly on GitHub.
+
+Component diagram (Mermaid):
 
 ```mermaid
 flowchart LR
-  Browser --> NextApp["Next.js App"]
+  Browser["Browser / Client"] --> NextApp["Next.js App (React + App Router)"]
+  NextApp --> Hono["Hono server routes / API"]
   NextApp --> AppwriteDB["Appwrite DB"]
   NextApp --> AppwriteStorage["Appwrite Storage"]
+  Hono --> AppwriteDB
+```
+
+Class / Data model (Mermaid):
+
+```mermaid
+classDiagram
+  class Workspace {
+    +string id
+    +string name
+    +string ownerId
+  }
+  class Project {
+    +string id
+    +string workspaceId
+    +string name
+  }
+  class Task {
+    +string id
+    +string projectId
+    +string title
+    +string status
+    +string assigneeId
+  }
+  class Member {
+    +string id
+    +string workspaceId
+    +string userId
+    +string role
+  }
+
+  Workspace "1" -- "*" Project
+  Project "1" -- "*" Task
+  Workspace "1" -- "*" Member
+  Member "*" -- "1" Task : assigned
+```
+
+Sequence diagram (Mermaid):
+
+```mermaid
+sequenceDiagram
+  participant User
+  participant Browser
+  participant App as "Next.js App"
+  participant API as "Hono Route"
+  participant AW as "Appwrite"
+
+  User->>Browser: submit credentials
+  Browser->>App: POST /api/auth/login
+  App->>API: validate request
+  API->>AW: authenticate (Appwrite)
+  AW-->>API: session/token
+  API-->>App: success + token
+  App-->>Browser: set cookie / redirect
+```
+
+Deployment diagram (Mermaid):
+
+```mermaid
+flowchart TB
+  UserDevice["User Device"] --> NextApp["Next.js App"]
+  NextApp --> Hono["Hono Routes"]
+  Hono --> Appwrite["Appwrite DB / Storage"]
+  NextApp --> Appwrite
 ```
 
 Best practices for diagrams

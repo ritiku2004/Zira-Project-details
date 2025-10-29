@@ -1,0 +1,29 @@
+classDiagram
+  class Workspace {
+    +string id
+    +string name
+    +string ownerId
+  }
+  class Project {
+    +string id
+    +string workspaceId
+    +string name
+  }
+  class Task {
+    +string id
+    +string projectId
+    +string title
+    +string status
+    +string assigneeId
+  }
+  class Member {
+    +string id
+    +string workspaceId
+    +string userId
+    +string role
+  }
+
+  Workspace "1" -- "*" Project
+  Project "1" -- "*" Task
+  Workspace "1" -- "*" Member
+  Member "*" -- "1" Task : assigned

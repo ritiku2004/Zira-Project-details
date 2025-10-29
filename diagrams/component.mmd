@@ -1,0 +1,6 @@
+flowchart LR
+  Browser["Browser"] --> NextApp["Next.js App"]
+  NextApp --> Hono["Hono Routes / API"]
+  NextApp --> AppwriteDB["Appwrite DB"]
+  NextApp --> AppwriteStorage["Appwrite Storage"]
+  Hono --> AppwriteDB

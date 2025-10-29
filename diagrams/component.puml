@@ -1,0 +1,19 @@
+@startuml
+package "Client" {
+  [Browser]
+}
+package "App" {
+  [Next.js App]
+  [Hono Routes]
+}
+package "BaaS" {
+  [Appwrite - Database]
+  [Appwrite - Storage]
+}
+
+Browser --> "Next.js App"
+"Next.js App" --> "Hono Routes"
+"Hono Routes" --> "Appwrite - Database"
+"Next.js App" --> "Appwrite - Database"
+"Next.js App" --> "Appwrite - Storage"
+@enduml
