@@ -36,11 +36,11 @@ Mermaid (simple):
 
 ```mermaid
 flowchart LR
-  A[Browser / Client] --> B[Next.js App (React + App Router)]
-  B --> C[Feature server routes (Hono) / API]
-  B --> D[Appwrite SDK (client)]
-  C --> D[Appwrite (DB, Storage, Auth)]
-  B --> E[Static assets / images]
+  A["Browser / Client"] --> B["Next.js App (React + App Router)"]
+  B --> C["Feature server routes (Hono) / API"]
+  B --> D["Appwrite SDK (client)"]
+  C --> D["Appwrite (DB, Storage, Auth)"]
+  B --> E["Static assets / images"]
 ```
 
 Notes: Appwrite hosts project data: workspaces, members, projects, tasks and image storage. The app uses both client SDK calls and server routes (see `src/features/*/server` and `src/app/api/[[...route]]/route.ts`).
