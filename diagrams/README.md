@@ -1,31 +1,50 @@
-Diagrams
-========
+# UML Diagrams for Gojira Project
 
-This folder contains source files for diagrams referenced in the project README. Two formats are provided:
+This folder contains source files for UML diagrams used in the project documentation:
 
-- PlantUML sources (`*.puml`) — can be rendered to PNG/SVG using PlantUML (jar or Docker).
-- Mermaid sources (`*.mmd`) — can be rendered by GitHub when embedded in Markdown or by Mermaid tools.
+## Diagram Types
 
-Files
-- component.puml / component.mmd — component / integration diagram
-- class-data-model.puml / class-data-model.mmd — data model / class diagram
-- sequence-signin.puml / sequence-signin.mmd — signin sequence diagram
-- deployment.puml / deployment.mmd — deployment topology
+### 1. Component Diagrams
+- `component.puml` / `component.mmd` - System component interactions
+Purpose: Shows high-level system components and their relationships
 
-Generating images (PowerShell)
+### 2. Class Diagrams
+- `class-data-model.puml` / `class-data-model.mmd` - Domain model classes
+Purpose: Shows data structure and relationships between entities
 
-If you have `plantuml.jar` and Java:
+### 3. Sequence Diagrams
+- `sequence-signin.puml` / `sequence-signin.mmd` - Authentication flow
+Purpose: Shows the login process interaction between components
 
+### 4. Use Case Diagrams
+- `use-case.puml` / `use-case.mmd` - System functionality
+Purpose: Shows what users can do with the system
+
+### 5. Activity Diagrams
+- `activity.puml` / `activity.mmd` - Task lifecycle
+Purpose: Shows the flow of task creation and updates
+
+### 6. Object Diagrams
+- `object.puml` / `object.mmd` - Instance examples
+Purpose: Shows concrete examples of system objects
+
+### 7. Deployment Diagrams
+- `deployment.puml` / `deployment.mmd` - Runtime topology
+Purpose: Shows how components are deployed
+
+## Generating Images
+
+### Using PlantUML (PowerShell)
+
+With Java and PlantUML jar:
 ```powershell
 java -jar .\tools\plantuml\plantuml.jar -tpng .\diagrams\*.puml
 ```
 
-Or using Docker (if Docker is available):
-
+Using Docker:
 ```powershell
 docker run --rm -v ${PWD}:/work plantuml/plantuml -tpng /work/diagrams/*.puml
 ```
 
-Mermaid
-
-The `.mmd` files are plain Mermaid sources and can be embedded directly in Markdown files or rendered by local Mermaid tools.
+### Mermaid
+The `.mmd` files are embedded directly in the project README and rendered by GitHub.

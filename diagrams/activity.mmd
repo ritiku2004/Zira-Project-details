@@ -1,0 +1,26 @@
+flowchart TD
+  Start([Start]) --> CreateTask[User creates task]
+  CreateTask --> IsValid{Is task valid?}
+  
+  IsValid -->|Yes| SaveTask[Save task]
+  IsValid -->|No| ShowError[Show validation error]
+  ShowError --> End1([End])
+  
+  SaveTask --> NotifyAssignee[Notify assignee]
+  NotifyAssignee --> UpdateBoard[Update board]
+  
+  UpdateBoard --> parallel1{{Parallel}}
+  parallel1 --> UpdateLog[Update activity log]
+  parallel1 --> SendNotif[Send notifications]
+  
+  UpdateLog --> ShowInViews[Task appears in views]
+  SendNotif --> ShowInViews
+  
+  ShowInViews --> TaskLoop{Task not done?}
+  TaskLoop -->|Yes| UpdateStatus[Update status]
+  UpdateStatus --> LogChanges[Log changes]
+  LogChanges --> TaskLoop
+  
+  TaskLoop -->|No| MarkComplete[Mark as complete]
+  MarkComplete --> Archive[Archive task]
+  Archive --> End2([End])

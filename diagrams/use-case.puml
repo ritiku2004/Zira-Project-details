@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+
+actor "User" as u
+actor "Admin" as a
+
+rectangle "Gojira Project Management" {
+  usecase "Login" as UC1
+  usecase "Create Workspace" as UC2
+  usecase "Create Project" as UC3
+  usecase "Manage Tasks" as UC4
+  usecase "View Dashboard" as UC5
+  usecase "Manage Members" as UC6
+  usecase "Update Task Status" as UC7
+  usecase "Assign Tasks" as UC8
+  usecase "View Calendar" as UC9
+  usecase "View Kanban Board" as UC10
+  usecase "Manage Workspace Settings" as UC11
+}
+
+u --> UC1
+u --> UC2
+u --> UC3
+u --> UC4
+u --> UC5
+u --> UC7
+u --> UC9
+u --> UC10
+
+a --> UC1
+a --> UC6
+a --> UC8
+a --> UC11
+
+UC4 ..> UC7 : includes
+UC4 ..> UC8 : includes
+@enduml

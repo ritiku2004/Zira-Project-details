@@ -1,0 +1,31 @@
+@startuml
+start
+:User creates task;
+
+if (Is task valid?) then (yes)
+  :Save task;
+  :Notify assignee;
+  :Update board;
+else (no)
+  :Show validation error;
+  stop
+endif
+
+fork
+  :Update activity log;
+fork again
+  :Send notifications;
+end fork
+
+:Task appears in views;
+
+while (Task not done)
+  :Update status;
+  :Log changes;
+endwhile
+
+:Mark as complete;
+:Archive task;
+
+stop
+@enduml

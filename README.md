@@ -294,6 +294,110 @@ flowchart TB
   NextApp --> Appwrite
 ```
 
+Use Case diagram (Mermaid):
+
+```mermaid
+flowchart TB
+  u["User"]
+  a["Admin"]
+
+  subgraph Gojira["Gojira Project Management"]
+    Login["Login"]
+    CreateWS["Create Workspace"]
+    CreateProj["Create Project"]
+    ManageTasks["Manage Tasks"]
+    ViewDash["View Dashboard"]
+    ManageMembers["Manage Members"]
+    UpdateStatus["Update Task Status"]
+    AssignTasks["Assign Tasks"]
+    ViewCal["View Calendar"]
+    ViewKanban["View Kanban Board"]
+    ManageSettings["Manage Settings"]
+  end
+
+  u --> Login
+  u --> CreateWS
+  u --> CreateProj
+  u --> ManageTasks
+  u --> ViewDash
+  u --> UpdateStatus
+  u --> ViewCal
+  u --> ViewKanban
+
+  a --> Login
+  a --> ManageMembers
+  a --> AssignTasks
+  a --> ManageSettings
+
+  ManageTasks --> UpdateStatus
+  ManageTasks --> AssignTasks
+```
+
+Activity diagram (Mermaid):
+
+```mermaid
+flowchart TD
+  Start([Start]) --> CreateTask[User creates task]
+  CreateTask --> IsValid{Is task valid?}
+  
+  IsValid -->|Yes| SaveTask[Save task]
+  IsValid -->|No| ShowError[Show validation error]
+  ShowError --> End1([End])
+  
+  SaveTask --> NotifyAssignee[Notify assignee]
+  NotifyAssignee --> UpdateBoard[Update board]
+  
+  UpdateBoard --> parallel1{{Parallel}}
+  parallel1 --> UpdateLog[Update activity log]
+  parallel1 --> SendNotif[Send notifications]
+  
+  UpdateLog --> ShowInViews[Task appears in views]
+  SendNotif --> ShowInViews
+  
+  ShowInViews --> TaskLoop{Task not done?}
+  TaskLoop -->|Yes| UpdateStatus[Update status]
+  UpdateStatus --> LogChanges[Log changes]
+  LogChanges --> TaskLoop
+  
+  TaskLoop -->|No| MarkComplete[Mark as complete]
+  MarkComplete --> Archive[Archive task]
+  Archive --> End2([End])
+```
+
+Object diagram (Mermaid):
+
+```mermaid
+classDiagram
+    class Workspace["workspace: Workspace"] {
+        id: "ws-1"
+        name: "Development Team"
+        ownerId: "user-1"
+    }
+    class Project["project: Project"] {
+        id: "proj-1"
+        workspaceId: "ws-1"
+        name: "Backend API"
+    }
+    class Task["task: Task"] {
+        id: "task-1"
+        projectId: "proj-1"
+        title: "Implement Auth"
+        status: "in-progress"
+        assigneeId: "user-2"
+    }
+    class Member["member: Member"] {
+        id: "member-1"
+        workspaceId: "ws-1"
+        userId: "user-2"
+        role: "developer"
+    }
+
+    Workspace --> Project
+    Project --> Task
+    Workspace --> Member
+    Member --> Task
+```
+
 Best practices for diagrams
 - Keep diagrams focused: one concern per diagram (e.g., data model vs. runtime deployment).
 - Source-control the textual sources (`.puml`, `.mmd`) and update them when APIs/data models change.

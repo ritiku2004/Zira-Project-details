@@ -1,0 +1,33 @@
+@startuml
+object "workspace: Workspace" as w1 {
+  id = "ws-1"
+  name = "Development Team"
+  ownerId = "user-1"
+}
+
+object "project: Project" as p1 {
+  id = "proj-1"
+  workspaceId = "ws-1"
+  name = "Backend API"
+}
+
+object "task: Task" as t1 {
+  id = "task-1"
+  projectId = "proj-1"
+  title = "Implement Auth"
+  status = "in-progress"
+  assigneeId = "user-2"
+}
+
+object "member: Member" as m1 {
+  id = "member-1"
+  workspaceId = "ws-1"
+  userId = "user-2"
+  role = "developer"
+}
+
+w1 --> p1
+p1 --> t1
+w1 --> m1
+m1 --> t1
+@enduml
