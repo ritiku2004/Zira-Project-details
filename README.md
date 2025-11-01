@@ -38,93 +38,80 @@ Mermaid (simple):
 ## 4. System Architecture
 
 ```mermaid
-flowchart TB
-    Browser["Browser Client"]
-    NextApp["Next.js App"]
-    Hono["Hono API Routes"]
-    Auth["Appwrite Auth"]
-    DB["Appwrite Database"]
-    Storage["Appwrite Storage"]
+graph TD
+    Client[Browser Client]
+    Next[Next.js App]
+    API[API Routes]
+    Auth[Auth Service]
+    DB[(Database)]
+    Store[Storage]
 
-    Browser --> NextApp
-    NextApp --> Hono
-    NextApp --> Auth
-    NextApp --> DB
-    NextApp --> Storage
-    Hono --> DB
-    Hono --> Auth
-    Hono --> Storage
+    Client --> Next
+    Next --> API
+    Next --> Auth
+    Next --> DB
+    Next --> Store
+    API --> Auth
+    API --> DB
+    API --> Store
+
+    style Client fill:#f9f,stroke:#333
+    style Next fill:#9cf,stroke:#333
+    style API fill:#9cf,stroke:#333
+    style Auth fill:#fc9,stroke:#333
+    style DB fill:#fc9,stroke:#333
+    style Store fill:#fc9,stroke:#333
 ```
 
 ## 5. Database Schema (ERD)
 
 ```mermaid
 erDiagram
-    %% Relationships
     USERS ||--o{ WORKSPACE_MEMBERS : has
     USERS ||--o{ TASKS : assigned_to
-    USERS ||--o{ TASK_COMMENTS : creates
-    USERS ||--o{ ATTACHMENTS : uploads
-    WORKSPACES ||--o{ WORKSPACE_MEMBERS : includes
     WORKSPACES ||--o{ PROJECTS : contains
     PROJECTS ||--o{ TASKS : has
-    TASKS ||--o{ TASK_COMMENTS : has
-    TASKS ||--o{ ATTACHMENTS : has
+    TASKS ||--o{ COMMENTS : has
+    TASKS ||--o{ FILES : has
 
-    %% Entity Definitions
     USERS {
-        string id PK "UUID"
-        string email "User Email"
-        string name "Full Name"
-        string avatar_url "Profile Picture"
-        timestamp created_at "Creation Time"
+        string id PK
+        string email
+        string name
+        timestamp created_at
     }
     WORKSPACES {
-        string id PK "UUID"
-        string name "Workspace Name"
-        string owner_id FK "Owner Reference"
-        timestamp created_at "Creation Time"
-    }
-    WORKSPACE_MEMBERS {
-        string id PK "UUID"
-        string workspace_id FK "Workspace Reference"
-        string user_id FK "User Reference"
-        string role "Member Role"
-        timestamp joined_at "Join Time"
+        string id PK
+        string name
+        string owner_id FK
     }
     PROJECTS {
-        string id PK "UUID"
-        string workspace_id FK "Workspace Reference"
-        string name "Project Name"
-        string description "Project Details"
-        timestamp created_at "Creation Time"
+        string id PK
+        string workspace_id FK
+        string name
+        string description
     }
     TASKS {
-        string id PK "UUID"
-        string project_id FK "Project Reference"
-        string assignee_id FK "Assignee Reference"
-        string title "Task Title"
-        string description "Task Details"
-        string status "Current Status"
-        string priority "Priority Level"
-        date due_date "Due Date"
-        timestamp created_at "Creation Time"
+        string id PK
+        string project_id FK
+        string assignee_id FK
+        string title
+        string status
+        date due_date
     }
-    TASK_COMMENTS {
-        string id PK "UUID"
-        string task_id FK "Task Reference"
-        string user_id FK "Author Reference"
-        string content "Comment Text"
-        timestamp created_at "Creation Time"
+    COMMENTS {
+        string id PK
+        string task_id FK
+        string user_id FK
+        string content
     }
-    ATTACHMENTS {
-        string id PK "UUID"
-        string task_id FK "Task Reference"
-        string user_id FK "Uploader Reference"
-        string filename "File Name"
-        string url "Storage URL"
-        timestamp created_at "Creation Time"
+    FILES {
+        string id PK
+        string task_id FK
+        string filename
+        string url
     }
+```
 ```
 
 ## Data Flow Diagrams
