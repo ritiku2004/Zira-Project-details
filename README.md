@@ -30,87 +30,61 @@ A Next.js 14 + TypeScript clone of Jira (Gojira) built with TailwindCSS, Appwrit
 - Runtime / package manager: README suggests Bun (but `package.json` scripts use Next CLI — Node.js or Bun both can run this)
 
 ## 4. Architecture (high-level)
+
 Client (Next.js app router) ⇄ Appwrite (database + storage + auth)
 
-Mermaid (simple):
-
 ```mermaid
-## 4. System Architecture
+flowchart LR
+  B[Browser] --> N[Next.js App]
+  N --> API[Hono / API Routes]
+  N --> Auth[Appwrite Auth]
+  N --> DB[(Appwrite DB)]
+  N --> Store[Appwrite Storage]
+  API --> Auth
+  API --> DB
+  API --> Store
 
-```mermaid
-graph TD
-    Client[Browser Client]
-    Next[Next.js App]
-    API[API Routes]
-    Auth[Auth Service]
-    DB[(Database)]
-    Store[Storage]
-
-    Client --> Next
-    Next --> API
-    Next --> Auth
-    Next --> DB
-    Next --> Store
-    API --> Auth
-    API --> DB
-    API --> Store
-
-    style Client fill:#f9f,stroke:#333
-    style Next fill:#9cf,stroke:#333
-    style API fill:#9cf,stroke:#333
-    style Auth fill:#fc9,stroke:#333
-    style DB fill:#fc9,stroke:#333
-    style Store fill:#fc9,stroke:#333
+  %% Keep layout wide for presentation (LR)
 ```
 
 ## 5. Database Schema (ERD)
 
+Below is a compact ERD suitable for slide layout (keeps entities short):
+
 ```mermaid
 erDiagram
-    USERS ||--o{ WORKSPACE_MEMBERS : has
-    USERS ||--o{ TASKS : assigned_to
-    WORKSPACES ||--o{ PROJECTS : contains
-    PROJECTS ||--o{ TASKS : has
-    TASKS ||--o{ COMMENTS : has
-    TASKS ||--o{ FILES : has
+  USER ||--o{ PROJECT : owns
+  PROJECT ||--o{ TASK : contains
+  USER ||--o{ TASK : assigned
+  TASK ||--o{ COMMENT : has
+  TASK ||--o{ FILE : has
 
-    USERS {
-        string id PK
-        string email
-        string name
-        timestamp created_at
-    }
-    WORKSPACES {
-        string id PK
-        string name
-        string owner_id FK
-    }
-    PROJECTS {
-        string id PK
-        string workspace_id FK
-        string name
-        string description
-    }
-    TASKS {
-        string id PK
-        string project_id FK
-        string assignee_id FK
-        string title
-        string status
-        date due_date
-    }
-    COMMENTS {
-        string id PK
-        string task_id FK
-        string user_id FK
-        string content
-    }
-    FILES {
-        string id PK
-        string task_id FK
-        string filename
-        string url
-    }
+  USER {
+    id PK
+    email
+    name
+  }
+  PROJECT {
+    id PK
+    workspace_id FK
+    name
+  }
+  TASK {
+    id PK
+    project_id FK
+    title
+    status
+  }
+  COMMENT {
+    id PK
+    task_id FK
+    user_id FK
+  }
+  FILE {
+    id PK
+    task_id FK
+    filename
+  }
 ```
 ```
 
