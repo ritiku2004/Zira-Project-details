@@ -53,7 +53,8 @@ Below is a compact ERD (keeps original erDiagram style but trimmed for height):
 
 ```mermaid
 erDiagram
-  USER ||--o{ PROJECT : owns
+    direction LR
+    USER ||--o{ PROJECT : owns
   PROJECT ||--o{ TASK : contains
   USER ||--o{ TASK : assigned
   TASK ||--o{ COMMENT : has

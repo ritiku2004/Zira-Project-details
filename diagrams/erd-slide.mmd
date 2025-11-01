@@ -1,6 +1,7 @@
 erDiagram
-  USER ||--o{ PROJECT : owns
-  PROJECT ||--o{ TASK : contains
+    direction LR
+    USER ||--o{ PROJECT : owns
+    PROJECT ||--o{ TASK : contains
   USER ||--o{ TASK : assigned
   TASK ||--o{ COMMENT : has
   TASK ||--o{ FILE : has
