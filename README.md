@@ -35,72 +35,95 @@ Client (Next.js app router) ⇄ Appwrite (database + storage + auth)
 Mermaid (simple):
 
 ```mermaid
-## Database Schema (ERD)
+## 4. System Architecture
+
+```mermaid
+flowchart TB
+    Browser["Browser Client"]
+    NextApp["Next.js App"]
+    Hono["Hono API Routes"]
+    Auth["Appwrite Auth"]
+    DB["Appwrite Database"]
+    Storage["Appwrite Storage"]
+
+    Browser --> NextApp
+    NextApp --> Hono
+    NextApp --> Auth
+    NextApp --> DB
+    NextApp --> Storage
+    Hono --> DB
+    Hono --> Auth
+    Hono --> Storage
+```
+
+## 5. Database Schema (ERD)
 
 ```mermaid
 erDiagram
-    USERS ||--o{ WORKSPACE_MEMBERS : "has"
-    USERS ||--o{ TASKS : "assigned to"
-    USERS ||--o{ TASK_COMMENTS : "creates"
-    USERS ||--o{ ATTACHMENTS : "uploads"
-    WORKSPACES ||--o{ WORKSPACE_MEMBERS : "includes"
-    WORKSPACES ||--o{ PROJECTS : "contains"
-    PROJECTS ||--o{ TASKS : "has"
-    TASKS ||--o{ TASK_COMMENTS : "has"
-    TASKS ||--o{ ATTACHMENTS : "has"
+    %% Relationships
+    USERS ||--o{ WORKSPACE_MEMBERS : has
+    USERS ||--o{ TASKS : assigned_to
+    USERS ||--o{ TASK_COMMENTS : creates
+    USERS ||--o{ ATTACHMENTS : uploads
+    WORKSPACES ||--o{ WORKSPACE_MEMBERS : includes
+    WORKSPACES ||--o{ PROJECTS : contains
+    PROJECTS ||--o{ TASKS : has
+    TASKS ||--o{ TASK_COMMENTS : has
+    TASKS ||--o{ ATTACHMENTS : has
 
+    %% Entity Definitions
     USERS {
-        string id PK
-        string email
-        string name
-        string avatar_url
-        timestamp created_at
+        string id PK "UUID"
+        string email "User Email"
+        string name "Full Name"
+        string avatar_url "Profile Picture"
+        timestamp created_at "Creation Time"
     }
     WORKSPACES {
-        string id PK
-        string name
-        string owner_id FK
-        timestamp created_at
+        string id PK "UUID"
+        string name "Workspace Name"
+        string owner_id FK "Owner Reference"
+        timestamp created_at "Creation Time"
     }
     WORKSPACE_MEMBERS {
-        string id PK
-        string workspace_id FK
-        string user_id FK
-        string role
-        timestamp joined_at
+        string id PK "UUID"
+        string workspace_id FK "Workspace Reference"
+        string user_id FK "User Reference"
+        string role "Member Role"
+        timestamp joined_at "Join Time"
     }
     PROJECTS {
-        string id PK
-        string workspace_id FK
-        string name
-        string description
-        timestamp created_at
+        string id PK "UUID"
+        string workspace_id FK "Workspace Reference"
+        string name "Project Name"
+        string description "Project Details"
+        timestamp created_at "Creation Time"
     }
     TASKS {
-        string id PK
-        string project_id FK
-        string assignee_id FK
-        string title
-        string description
-        string status
-        string priority
-        date due_date
-        timestamp created_at
+        string id PK "UUID"
+        string project_id FK "Project Reference"
+        string assignee_id FK "Assignee Reference"
+        string title "Task Title"
+        string description "Task Details"
+        string status "Current Status"
+        string priority "Priority Level"
+        date due_date "Due Date"
+        timestamp created_at "Creation Time"
     }
     TASK_COMMENTS {
-        string id PK
-        string task_id FK
-        string user_id FK
-        string content
-        timestamp created_at
+        string id PK "UUID"
+        string task_id FK "Task Reference"
+        string user_id FK "Author Reference"
+        string content "Comment Text"
+        timestamp created_at "Creation Time"
     }
     ATTACHMENTS {
-        string id PK
-        string task_id FK
-        string user_id FK
-        string filename
-        string url
-        timestamp created_at
+        string id PK "UUID"
+        string task_id FK "Task Reference"
+        string user_id FK "Uploader Reference"
+        string filename "File Name"
+        string url "Storage URL"
+        timestamp created_at "Creation Time"
     }
 ```
 
