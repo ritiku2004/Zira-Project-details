@@ -60,32 +60,33 @@ erDiagram
   TASK ||--o{ FILE : has
 
   USER {
-    id PK
-    email
-    name
+    string id PK
+    string email
+    string name
   }
   PROJECT {
-    id PK
-    workspace_id FK
-    name
+    string id PK
+    string workspace_id FK
+    string name
   }
   TASK {
-    id PK
-    project_id FK
-    title
-    status
+    string id PK
+    string project_id FK
+    string title
+    string status
   }
   COMMENT {
-    id PK
-    task_id FK
-    user_id FK
+    string id PK
+    string task_id FK
+    string user_id FK
+    string content
   }
   FILE {
-    id PK
-    task_id FK
-    filename
+    string id PK
+    string task_id FK
+    string filename
+    string url
   }
-```
 ```
 
 ## Data Flow Diagrams
