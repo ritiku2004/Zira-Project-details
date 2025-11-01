@@ -49,44 +49,24 @@ flowchart LR
 
 ## 5. Database Schema (ERD)
 
-Below is a compact ERD suitable for slide layout (keeps entities short):
+Below is a compact, horizontal ERD-style diagram suitable for slide layout (LR):
 
 ```mermaid
-erDiagram
-  USER ||--o{ PROJECT : owns
-  PROJECT ||--o{ TASK : contains
-  USER ||--o{ TASK : assigned
-  TASK ||--o{ COMMENT : has
-  TASK ||--o{ FILE : has
+graph LR
+  USER["USER\nid PK\nemail\nname"]
+  PROJECT["PROJECT\nid PK\nworkspace_id FK\nname"]
+  TASK["TASK\nid PK\nproject_id FK\ntitle\nstatus"]
+  COMMENT["COMMENT\nid PK\ntask_id FK\nuser_id FK"]
+  FILE["FILE\nid PK\ntask_id FK\nfilename"]
 
-  USER {
-    string id PK
-    string email
-    string name
-  }
-  PROJECT {
-    string id PK
-    string workspace_id FK
-    string name
-  }
-  TASK {
-    string id PK
-    string project_id FK
-    string title
-    string status
-  }
-  COMMENT {
-    string id PK
-    string task_id FK
-    string user_id FK
-    string content
-  }
-  FILE {
-    string id PK
-    string task_id FK
-    string filename
-    string url
-  }
+  USER -->|owns| PROJECT
+  PROJECT -->|contains| TASK
+  USER -->|assigned| TASK
+  TASK -->|has| COMMENT
+  TASK -->|has| FILE
+
+  classDef entity fill:#fff,stroke:#333,stroke-width:1px;
+  class USER,PROJECT,TASK,COMMENT,FILE entity
 ```
 
 ## Data Flow Diagrams
