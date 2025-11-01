@@ -1,0 +1,29 @@
+@startuml
+!include <archimate/Archimate>
+
+' DFD Level 1 (Main Processes)
+rectangle "Users" as Users
+rectangle "Authentication" as Auth
+rectangle "Workspace Management" as WM
+rectangle "Project Management" as PM
+rectangle "Task Management" as TM
+database "Appwrite\nStorage" as DB
+
+Users --> Auth : Credentials
+Auth --> Users : Auth Token
+Auth --> WM : User Context
+Users --> WM : Workspace Operations
+WM --> Users : Workspace Updates
+WM --> PM : Workspace Context
+Users --> PM : Project Operations
+PM --> Users : Project Updates
+PM --> TM : Project Context
+Users --> TM : Task Operations
+TM --> Users : Task Updates
+
+Auth <--> DB : User Data
+WM <--> DB : Workspace Data
+PM <--> DB : Project Data
+TM <--> DB : Task Data
+
+@enduml

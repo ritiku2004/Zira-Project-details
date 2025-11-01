@@ -1,0 +1,12 @@
+graph TD
+    Start((Start)) -->|User opens task view| TaskView[View task details]
+    TaskView -->|Update required| Edit[Edit task]
+    TaskView -->|Add info| Comment[Add comment]
+    TaskView -->|Upload| Attach[Add attachment]
+    Edit -->|Save changes| Update[Update task]
+    Comment -->|Post| AddC[Save comment]
+    Attach -->|Upload| AddA[Save attachment]
+    Update --> TaskView
+    AddC --> TaskView
+    AddA --> TaskView
+    TaskView -->|Task complete| End((End))

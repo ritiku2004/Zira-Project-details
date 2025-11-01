@@ -1,0 +1,24 @@
+graph TD
+    User((User))
+    CreateTask[Create Task]
+    AssignTask[Assign Task]
+    UpdateStatus[Update Status]
+    AddComment[Add Comment]
+    UploadFile[Upload File]
+    TaskDB[(Tasks DB)]
+    CommentDB[(Comments DB)]
+    FileDB[(Files DB)]
+
+    User -->|Create| CreateTask
+    CreateTask -->|Store| TaskDB
+    User -->|Assign| AssignTask
+    AssignTask -->|Update| TaskDB
+    User -->|Update| UpdateStatus
+    UpdateStatus -->|Modify| TaskDB
+    User -->|Comment| AddComment
+    AddComment -->|Store| CommentDB
+    User -->|Upload| UploadFile
+    UploadFile -->|Store| FileDB
+    TaskDB -->|Task Data| User
+    CommentDB -->|Comments| User
+    FileDB -->|Files| User

@@ -1,0 +1,35 @@
+@startuml
+!include <archimate/Archimate>
+
+' DFD Level 2 (Task Management Detail)
+actor "User" as user
+rectangle "Task List View" as TLV
+rectangle "Task Creation" as TC
+rectangle "Task Update" as TU
+rectangle "Comment System" as CS
+rectangle "Notification Service" as NS
+database "Task Storage" as TS
+database "Comment Storage" as COS
+database "User Storage" as US
+
+user --> TLV : View Tasks
+TLV --> TS : Fetch Tasks
+TS --> TLV : Task Data
+
+user --> TC : Create Task
+TC --> TS : Store Task
+TC --> NS : Task Created
+NS --> US : Get User Info
+NS --> user : Notify
+
+user --> TU : Update Task
+TU --> TS : Update Status
+TU --> NS : Status Changed
+NS --> user : Notify
+
+user --> CS : Add Comment
+CS --> COS : Store Comment
+CS --> NS : New Comment
+NS --> user : Notify
+
+@enduml

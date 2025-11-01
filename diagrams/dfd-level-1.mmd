@@ -1,0 +1,20 @@
+graph TD
+    User((User))
+    Auth[Authentication]
+    WM[Workspace Management]
+    PM[Project Management]
+    TM[Task Management]
+    DB[(Database)]
+
+    User -->|Login/Register| Auth
+    Auth -->|Verify| DB
+    User -->|Create/Manage| WM
+    WM -->|Store| DB
+    User -->|Create/Manage| PM
+    PM -->|Store| DB
+    User -->|Create/Track| TM
+    TM -->|Store| DB
+    DB -->|Return Data| Auth
+    DB -->|Return Data| WM
+    DB -->|Return Data| PM
+    DB -->|Return Data| TM

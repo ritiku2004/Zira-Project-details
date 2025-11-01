@@ -1,0 +1,13 @@
+@startuml
+!include <archimate/Archimate>
+
+' DFD Level 0 (Context Diagram)
+rectangle "Users/Team Members" as Users
+rectangle "Gojira Project\nManagement System" as System
+rectangle "External Storage\n(Appwrite)" as Storage
+
+Users --> System : Tasks, Comments,\nAttachments
+System --> Users : Updates, Notifications
+System <--> Storage : Data Storage/Retrieval
+
+@enduml

@@ -1,0 +1,9 @@
+graph TD
+    User((User))
+    System[Task Management System]
+    DB[(Database)]
+    
+    User -->|Input/View Data| System
+    System -->|Store/Retrieve Data| DB
+    DB -->|Return Results| System
+    System -->|Display Results| User

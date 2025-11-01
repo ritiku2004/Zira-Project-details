@@ -1,0 +1,78 @@
+@startuml
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x#
+
+' Tables
+Table(users, "users") {
+  primary_key(id): UUID
+  email: VARCHAR
+  name: VARCHAR
+  avatar_url: VARCHAR
+  created_at: TIMESTAMP
+}
+
+Table(workspaces, "workspaces") {
+  primary_key(id): UUID
+  name: VARCHAR
+  foreign_key(owner_id): UUID
+  created_at: TIMESTAMP
+}
+
+Table(workspace_members, "workspace_members") {
+  primary_key(id): UUID
+  foreign_key(workspace_id): UUID
+  foreign_key(user_id): UUID
+  role: VARCHAR
+  joined_at: TIMESTAMP
+}
+
+Table(projects, "projects") {
+  primary_key(id): UUID
+  foreign_key(workspace_id): UUID
+  name: VARCHAR
+  description: TEXT
+  created_at: TIMESTAMP
+}
+
+Table(tasks, "tasks") {
+  primary_key(id): UUID
+  foreign_key(project_id): UUID
+  foreign_key(assignee_id): UUID
+  title: VARCHAR
+  description: TEXT
+  status: VARCHAR
+  priority: VARCHAR
+  due_date: DATE
+  created_at: TIMESTAMP
+}
+
+Table(task_comments, "task_comments") {
+  primary_key(id): UUID
+  foreign_key(task_id): UUID
+  foreign_key(user_id): UUID
+  content: TEXT
+  created_at: TIMESTAMP
+}
+
+Table(attachments, "attachments") {
+  primary_key(id): UUID
+  foreign_key(task_id): UUID
+  foreign_key(user_id): UUID
+  filename: VARCHAR
+  url: VARCHAR
+  created_at: TIMESTAMP
+}
+
+' Relationships
+users "1" -- "*" workspace_members
+workspaces "1" -- "*" workspace_members
+workspaces "1" -- "*" projects
+projects "1" -- "*" tasks
+users "1" -- "*" tasks
+tasks "1" -- "*" task_comments
+tasks "1" -- "*" attachments
+users "1" -- "*" task_comments
+users "1" -- "*" attachments
+
+@enduml

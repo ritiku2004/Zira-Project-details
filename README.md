@@ -35,17 +35,167 @@ Client (Next.js app router) ⇄ Appwrite (database + storage + auth)
 Mermaid (simple):
 
 ```mermaid
-flowchart LR
-  A["Browser / Client"] --> B["Next.js App (React + App Router)"]
-  B --> C["Feature server routes (Hono) / API"]
-  B --> D["Appwrite SDK (client)"]
-  C --> D["Appwrite (DB, Storage, Auth)"]
-  B --> E["Static assets / images"]
+## Database Schema (ERD)
+
+```mermaid
+erDiagram
+    USERS {
+        uuid id PK
+        string email
+        string name
+        string avatar_url
+        timestamp created_at
+    }
+    
+    WORKSPACES {
+        uuid id PK
+        string name
+        uuid owner_id FK
+        timestamp created_at
+    }
+    
+    WORKSPACE_MEMBERS {
+        uuid id PK
+        uuid workspace_id FK
+        uuid user_id FK
+        string role
+        timestamp joined_at
+    }
+    
+    PROJECTS {
+        uuid id PK
+        uuid workspace_id FK
+        string name
+        text description
+        timestamp created_at
+    }
+    
+    TASKS {
+        uuid id PK
+        uuid project_id FK
+        uuid assignee_id FK
+        string title
+        text description
+        string status
+        string priority
+        date due_date
+        timestamp created_at
+    }
+    
+    TASK_COMMENTS {
+        uuid id PK
+        uuid task_id FK
+        uuid user_id FK
+        text content
+        timestamp created_at
+    }
+    
+    ATTACHMENTS {
+        uuid id PK
+        uuid task_id FK
+        uuid user_id FK
+        string filename
+        string url
+        timestamp created_at
+    }
+
+    USERS ||--o{ WORKSPACE_MEMBERS : "has"
+    WORKSPACES ||--o{ WORKSPACE_MEMBERS : "includes"
+    WORKSPACES ||--o{ PROJECTS : "contains"
+    PROJECTS ||--o{ TASKS : "has"
+    USERS ||--o{ TASKS : "assigned to"
+    TASKS ||--o{ TASK_COMMENTS : "has"
+    TASKS ||--o{ ATTACHMENTS : "has"
+    USERS ||--o{ TASK_COMMENTS : "creates"
+    USERS ||--o{ ATTACHMENTS : "uploads"
 ```
 
-Notes: Appwrite hosts project data: workspaces, members, projects, tasks and image storage. The app uses both client SDK calls and server routes (see `src/features/*/server` and `src/app/api/[[...route]]/route.ts`).
+## Data Flow Diagrams
 
-## 5. Folder structure (key folders)
+### Level 0 (Context Diagram)
+
+```mermaid
+graph TD
+    User((User))
+    System[Task Management System]
+    DB[(Database)]
+    
+    User -->|Input/View Data| System
+    System -->|Store/Retrieve Data| DB
+    DB -->|Return Results| System
+    System -->|Display Results| User
+```
+
+### Level 1 (Main Processes)
+
+```mermaid
+graph TD
+    User((User))
+    Auth[Authentication]
+    WM[Workspace Management]
+    PM[Project Management]
+    TM[Task Management]
+    DB[(Database)]
+
+    User -->|Login/Register| Auth
+    Auth -->|Verify| DB
+    User -->|Create/Manage| WM
+    WM -->|Store| DB
+    User -->|Create/Manage| PM
+    PM -->|Store| DB
+    User -->|Create/Track| TM
+    TM -->|Store| DB
+    DB -->|Return Data| Auth
+    DB -->|Return Data| WM
+    DB -->|Return Data| PM
+    DB -->|Return Data| TM
+```
+
+### Level 2 (Task Management Detail)
+
+```mermaid
+graph TD
+    User((User))
+    CreateTask[Create Task]
+    AssignTask[Assign Task]
+    UpdateStatus[Update Status]
+    AddComment[Add Comment]
+    UploadFile[Upload File]
+    TaskDB[(Tasks DB)]
+    CommentDB[(Comments DB)]
+    FileDB[(Files DB)]
+
+    User -->|Create| CreateTask
+    CreateTask -->|Store| TaskDB
+    User -->|Assign| AssignTask
+    AssignTask -->|Update| TaskDB
+    User -->|Update| UpdateStatus
+    UpdateStatus -->|Modify| TaskDB
+    User -->|Comment| AddComment
+    AddComment -->|Store| CommentDB
+    User -->|Upload| UploadFile
+    UploadFile -->|Store| FileDB
+    TaskDB -->|Task Data| User
+    CommentDB -->|Comments| User
+    FileDB -->|Files| User
+```
+
+## Task Activity Flow
+
+```mermaid
+graph TD
+    Start((Start)) -->|User opens task view| TaskView[View task details]
+    TaskView -->|Update required| Edit[Edit task]
+    TaskView -->|Add info| Comment[Add comment]
+    TaskView -->|Upload| Attach[Add attachment]
+    Edit -->|Save changes| Update[Update task]
+    Comment -->|Post| AddC[Save comment]
+    Attach -->|Upload| AddA[Save attachment]
+    Update --> TaskView
+    AddC --> TaskView
+    AddA --> TaskView
+    TaskView -->|Task complete| End((End))
+```
 - `src/app/` — Next.js App Router entry: layouts and pages
   - `(auth)` — sign-in / sign-up
   - `(dashboard)` — main dashboard and workspace pages
