@@ -1,0 +1,35 @@
+erDiagram
+  USER ||--o{ PROJECT : owns
+  PROJECT ||--o{ TASK : contains
+  USER ||--o{ TASK : assigned
+  TASK ||--o{ COMMENT : has
+  TASK ||--o{ FILE : has
+
+  USER {
+    string id PK
+    string email
+    string name
+  }
+  PROJECT {
+    string id PK
+    string workspace_id FK
+    string name
+  }
+  TASK {
+    string id PK
+    string project_id FK
+    string title
+    string status
+  }
+  COMMENT {
+    string id PK
+    string task_id FK
+    string user_id FK
+    string content
+  }
+  FILE {
+    string id PK
+    string task_id FK
+    string filename
+    string url
+  }

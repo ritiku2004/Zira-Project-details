@@ -1,29 +1,15 @@
 classDiagram
   class Workspace {
-    +string id
-    +string name
-    +string ownerId
-  }
-  class Project {
-    +string id
-    +string workspaceId
-    +string name
-  }
-  class Task {
-    +string id
-    +string projectId
-    +string title
-    +string status
-    +string assigneeId
-  }
-  class Member {
-    +string id
-    +string workspaceId
-    +string userId
-    +string role
-  }
+    %% horizontal class diagram for slides
+    classDiagram
+      direction LR
+      class Workspace {+id: string\n+name: string}
+      class Project {+id: string\n+workspaceId: string\n+name: string}
+      class Task {+id: string\n+projectId: string\n+title: string\n+status: string}
+      class Member {+id: string\n+workspaceId: string\n+userId: string\n+role: string}
 
-  Workspace "1" -- "*" Project
-  Project "1" -- "*" Task
-  Workspace "1" -- "*" Member
-  Member "*" -- "1" Task : assigned
+      Workspace "1" -- "*" Project
+      Project "1" -- "*" Task
+      Workspace "1" -- "*" Member
+      Member "*" -- "1" Task : assigned
+    +string title

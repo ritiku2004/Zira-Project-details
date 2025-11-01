@@ -1,0 +1,10 @@
+flowchart LR
+  User((User)) --> Create[Create Task]
+  Create --> TaskDB[(Tasks DB)]
+  User --> Assign[Assign Task]
+  Assign --> TaskDB
+  User --> Comment[Add Comment]
+  Comment --> CommentDB[(Comments DB)]
+  User --> Upload[Upload File]
+  Upload --> FileDB[(Files DB)]
+  %% compact task-management detail (horizontal)

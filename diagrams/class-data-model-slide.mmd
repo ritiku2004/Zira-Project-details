@@ -1,0 +1,11 @@
+classDiagram
+  direction LR
+  class Workspace {+id: string\n+name: string}
+  class Project {+id: string\n+workspaceId: string\n+name: string}
+  class Task {+id: string\n+projectId: string\n+title: string\n+status: string}
+  class Member {+id: string\n+workspaceId: string\n+userId: string\n+role: string}
+
+  Workspace "1" -- "*" Project
+  Project "1" -- "*" Task
+  Workspace "1" -- "*" Member
+  Member "*" -- "1" Task : assigned

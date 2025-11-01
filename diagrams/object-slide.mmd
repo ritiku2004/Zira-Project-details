@@ -1,0 +1,8 @@
+classDiagram
+  direction LR
+  class workspace {id: "ws-1"\nname: "Dev"}
+  class project {id: "proj-1"\nworkspaceId: "ws-1"\nname: "API"}
+  class task {id: "task-1"\nprojectId: "proj-1"\ntitle: "Auth"\nstatus: "in-progress"}
+
+  workspace --> project
+  project --> task

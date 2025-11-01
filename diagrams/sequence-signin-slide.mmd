@@ -1,0 +1,14 @@
+sequenceDiagram
+  participant User
+  participant Browser
+  participant App as "Next.js App"
+  participant API as "Hono Route"
+  participant AW as "Appwrite"
+
+  User->>Browser: submit credentials
+  Browser->>App: POST /api/auth/login
+  App->>API: validate request
+  API->>AW: authenticate (Appwrite)
+  AW-->>API: session/token
+  API-->>App: success + token
+  App-->>Browser: set cookie / redirect

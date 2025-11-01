@@ -1,0 +1,7 @@
+flowchart LR
+  User[User Device] --> Browser[Browser]
+  Browser --> Next[Next.js App]
+  Next --> Hono[Hono Routes]
+  Hono --> DB[(Appwrite DB)]
+  Next --> DB
+  %% compact horizontal deployment view

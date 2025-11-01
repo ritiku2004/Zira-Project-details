@@ -2,49 +2,41 @@
 
 This folder contains source files for UML diagrams used in the project documentation:
 
-## Diagram Types
+## Diagram Types (slide-friendly sources)
 
-### 1. Component Diagrams
-- `component.puml` / `component.mmd` - System component interactions
-Purpose: Shows high-level system components and their relationships
+The `*-slide.mmd` files are horizontal, compact Mermaid sources optimized for slides. Files:
 
-### 2. Class Diagrams
-- `class-data-model.puml` / `class-data-model.mmd` - Domain model classes
-Purpose: Shows data structure and relationships between entities
+- `component-slide.mmd` — system component overview (LR)
+- `class-data-model-slide.mmd` — class/data model (LR)
+- `sequence-signin-slide.mmd` — login sequence (compact)
+- `use-case-slide.mmd` — use-case overview (LR)
+- `activity-slide.mmd` — activity/task flow (LR)
+- `deployment-slide.mmd` — deployment topology (LR)
+- `erd-slide.mmd` — compact ERD for slides
+- `dfd-level-0-slide.mmd`, `dfd-level-1-slide.mmd`, `dfd-level-2-slide.mmd` — DFD levels (LR)
+- `object-slide.mmd` — sample object instances (LR)
 
-### 3. Sequence Diagrams
-- `sequence-signin.puml` / `sequence-signin.mmd` - Authentication flow
-Purpose: Shows the login process interaction between components
+## Generating images from Mermaid sources
 
-### 4. Use Case Diagrams
-- `use-case.puml` / `use-case.mmd` - System functionality
-Purpose: Shows what users can do with the system
+Recommended: use `@mermaid-js/mermaid-cli` (`mmdc`) to export PNG/SVG sized for slides.
 
-### 5. Activity Diagrams
-- `activity.puml` / `activity.mmd` - Task lifecycle
-Purpose: Shows the flow of task creation and updates
-
-### 6. Object Diagrams
-- `object.puml` / `object.mmd` - Instance examples
-Purpose: Shows concrete examples of system objects
-
-### 7. Deployment Diagrams
-- `deployment.puml` / `deployment.mmd` - Runtime topology
-Purpose: Shows how components are deployed
-
-## Generating Images
-
-### Using PlantUML (PowerShell)
-
-With Java and PlantUML jar:
+Install (project root):
 ```powershell
-java -jar .\tools\plantuml\plantuml.jar -tpng .\diagrams\*.puml
+npm install -D @mermaid-js/mermaid-cli
 ```
 
-Using Docker:
+Example exports (PowerShell):
 ```powershell
-docker run --rm -v ${PWD}:/work plantuml/plantuml -tpng /work/diagrams/*.puml
+# Architecture (wide banner)
+npx mmdc -i diagrams/component-slide.mmd -o diagrams/component-1920x540.png -w 1920 -H 540
+
+# ERD for slide (16:9)
+npx mmdc -i diagrams/erd-slide.mmd -o diagrams/erd-1600x900.png -w 1600 -H 900
+
+# DFD / Activity examples
+npx mmdc -i diagrams/dfd-level-1-slide.mmd -o diagrams/dfd-level-1-1600x600.png -w 1600 -H 600
 ```
 
-### Mermaid
-The `.mmd` files are embedded directly in the project README and rendered by GitHub.
+Notes:
+- The `*-slide.mmd` files are already LR/horizontal and compact vertically to suit PPT slides.
+- If you want different image sizes (taller or shorter), change `-w` and `-H`.

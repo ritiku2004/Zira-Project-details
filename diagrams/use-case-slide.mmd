@@ -1,0 +1,9 @@
+flowchart LR
+  User[User] --> Login[Login]
+  User --> CreateWS[Create Workspace]
+  User --> CreateProj[Create Project]
+  User --> ManageTasks[Manage Tasks]
+  Admin[Admin] --> ManageMembers[Manage Members]
+  ManageTasks --> UpdateStatus[Update Status]
+  ManageTasks --> AssignTasks[Assign Tasks]
+  %% compact use-case overview (horizontal)

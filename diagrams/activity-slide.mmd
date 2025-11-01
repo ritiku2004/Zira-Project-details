@@ -1,0 +1,12 @@
+flowchart LR
+  Start([Start]) --> Create[Create task]
+  Create --> Valid{Valid?}
+  Valid -->|yes| Save[Save task]
+  Valid -->|no| Error[Show error]
+  Save --> Notify[Notify assignee]
+  Notify --> Update[Update board]
+  Update --> Views[Show in views]
+  Views --> Loop{Done?}
+  Loop -->|no| UpdateStatus[Update status]
+  Loop -->|yes| Complete[Complete task]
+  %% compact, horizontal activity flow

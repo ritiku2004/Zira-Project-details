@@ -1,0 +1,10 @@
+flowchart LR
+  User((User)) --> Auth[Auth]
+  User --> WM[Workspace Mgmt]
+  User --> PM[Project Mgmt]
+  User --> TM[Task Mgmt]
+  Auth --> DB[(Database)]
+  WM --> DB
+  PM --> DB
+  TM --> DB
+  %% compact main process overview (horizontal)

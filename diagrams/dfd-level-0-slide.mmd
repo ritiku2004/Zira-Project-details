@@ -1,0 +1,6 @@
+flowchart LR
+  User((User)) --> System[Task Management System]
+  System --> DB[(Database)]
+  System -->|Display| User
+  DB -->|Return| System
+  %% compact context diagram (horizontal)
