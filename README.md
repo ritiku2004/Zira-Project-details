@@ -39,75 +39,69 @@ Mermaid (simple):
 
 ```mermaid
 erDiagram
+    USERS ||--o{ WORKSPACE_MEMBERS : "has"
+    USERS ||--o{ TASKS : "assigned to"
+    USERS ||--o{ TASK_COMMENTS : "creates"
+    USERS ||--o{ ATTACHMENTS : "uploads"
+    WORKSPACES ||--o{ WORKSPACE_MEMBERS : "includes"
+    WORKSPACES ||--o{ PROJECTS : "contains"
+    PROJECTS ||--o{ TASKS : "has"
+    TASKS ||--o{ TASK_COMMENTS : "has"
+    TASKS ||--o{ ATTACHMENTS : "has"
+
     USERS {
-        uuid id PK
+        string id PK
         string email
         string name
         string avatar_url
         timestamp created_at
     }
-    
     WORKSPACES {
-        uuid id PK
+        string id PK
         string name
-        uuid owner_id FK
+        string owner_id FK
         timestamp created_at
     }
-    
     WORKSPACE_MEMBERS {
-        uuid id PK
-        uuid workspace_id FK
-        uuid user_id FK
+        string id PK
+        string workspace_id FK
+        string user_id FK
         string role
         timestamp joined_at
     }
-    
     PROJECTS {
-        uuid id PK
-        uuid workspace_id FK
+        string id PK
+        string workspace_id FK
         string name
-        text description
+        string description
         timestamp created_at
     }
-    
     TASKS {
-        uuid id PK
-        uuid project_id FK
-        uuid assignee_id FK
+        string id PK
+        string project_id FK
+        string assignee_id FK
         string title
-        text description
+        string description
         string status
         string priority
         date due_date
         timestamp created_at
     }
-    
     TASK_COMMENTS {
-        uuid id PK
-        uuid task_id FK
-        uuid user_id FK
-        text content
+        string id PK
+        string task_id FK
+        string user_id FK
+        string content
         timestamp created_at
     }
-    
     ATTACHMENTS {
-        uuid id PK
-        uuid task_id FK
-        uuid user_id FK
+        string id PK
+        string task_id FK
+        string user_id FK
         string filename
         string url
         timestamp created_at
     }
-
-    USERS ||--o{ WORKSPACE_MEMBERS : "has"
-    WORKSPACES ||--o{ WORKSPACE_MEMBERS : "includes"
-    WORKSPACES ||--o{ PROJECTS : "contains"
-    PROJECTS ||--o{ TASKS : "has"
-    USERS ||--o{ TASKS : "assigned to"
-    TASKS ||--o{ TASK_COMMENTS : "has"
-    TASKS ||--o{ ATTACHMENTS : "has"
-    USERS ||--o{ TASK_COMMENTS : "creates"
-    USERS ||--o{ ATTACHMENTS : "uploads"
 ```
 
 ## Data Flow Diagrams
