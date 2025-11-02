@@ -1,22 +1,13 @@
-%%{init: {"theme":"base","flowchart": {"nodeSpacing": 20, "rankSpacing": 20, "curve":"basis"}, "themeVariables": {"fontSize": "11px"}}}%%
-flowchart TD
-  Start([Start]) --> Create[Create]
-  Create --> Valid{Valid?}
-  
-  subgraph Flow1
-    Valid -->|Yes| Save[Save]
+%%{init: {"theme":"base","flowchart": {"nodeSpacing": 16, "rankSpacing": 16, "curve":"basis"}, "themeVariables": {"fontSize": "11px"}}}%%
+flowchart LR
+  subgraph Row1
+    Start([Start]) --> Create[Create] --> Valid{Valid?}
+    Valid -->|Yes| Save[Save] --> Notify[Notify]
     Valid -->|No| Error[Error]
-    Save --> Notify[Notify]
   end
-  
-  subgraph Flow2
-    Notify --> Update[Update]
-    Update --> Views[Views]
-  end
-  
-  subgraph Flow3
-    Views --> Loop{Done?}
-    Loop -->|Yes| Status[Update]
-    Loop -->|No| Complete[Done]
+  subgraph Row2
+    Notify --> Update[Update] --> Views[Views] --> Loop{Done?}
+    Loop -->|Yes| Done[Complete]
+    Loop -->|No| Status[Update]
     Status --> Loop
   end
