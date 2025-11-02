@@ -2,9 +2,9 @@ flowchart LR
 ```mermaid
 %% Compact slide-friendly activity diagram
 %% Use init to reduce node/rank spacing and a small font class
-%%{init: {"theme":"base","flowchart": {"nodeSpacing": 24, "rankSpacing": 24, "curve":"linear"}}}%%
+%%{init: {"theme":"base","flowchart": {"nodeSpacing": 16, "rankSpacing": 16, "curve":"basis"}, "themeVariables": {"fontSize": "10px", "fontFamily": "arial"}}}%%
 flowchart LR
-  classDef small font-size:12px;
+  classDef small font-size:10px,font-family:arial;
 
   Start([Start]) --> Create[Create]
   Create --> Valid{Valid?}
