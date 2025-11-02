@@ -1,12 +1,8 @@
-%%{init: {"theme":"base", "flowchart": {"nodeSpacing": 10, "rankSpacing": 10}, "themeVariables": {"fontSize": "11px", "fontFamily": "arial", "primaryColor": "#000000", "primaryTextColor": "#000000", "lineColor": "#000000", "tertiaryColor": "#fff"}}}%%
-flowchart LR
-  classDef basic fill:#fff,stroke:#000,color:#000,font-size:11px
-  classDef diamond fill:#fff,stroke:#000,color:#000,font-size:11px
-
-  Start([→]) --> Task[Task] --> Valid{Valid?}
-  Valid -->|Y| Save[Save]
-  Valid -->|N| Start
-  Save --> Done([→])
-
-  class Start,Task,Save basic
-  class Valid diamond
+%%{init: {"flowchart": {"nodeSpacing": 15, "rankSpacing": 15}}}%%
+flowchart TD
+    Start([Start]) --> Create[Create Task]
+    Create --> Valid{Valid?}
+    Valid -->|No| Create
+    Valid -->|Yes| Save[Save]
+    Save --> Update[Update Board]
+    Update --> Done([Done])
