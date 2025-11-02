@@ -2,21 +2,30 @@ flowchart LR
 ```mermaid
 %% Compact slide-friendly activity diagram
 %% Use init to reduce node/rank spacing and a small font class
-%%{init: {"theme":"base","flowchart": {"nodeSpacing": 16, "rankSpacing": 16, "curve":"basis"}, "themeVariables": {"fontSize": "10px", "fontFamily": "arial"}}}%%
-flowchart LR
+%%{init: {"theme":"base","flowchart": {"nodeSpacing": 20, "rankSpacing": 20, "curve":"basis"}, "themeVariables": {"fontSize": "10px", "fontFamily": "arial"}}}%%
+flowchart TD
   classDef small font-size:10px,font-family:arial;
 
   Start([Start]) --> Create[Create]
   Create --> Valid{Valid?}
-  Valid -->|yes| Save[Save]
-  Valid -->|no| Error[Error]
-  Save --> Notify[Notify]
-  Notify --> Update[Update]
-  Update --> Views[Views]
-  Views --> Loop{Done?}
-  Loop -->|no| UpdateStatus[Upd.]
-  Loop -->|yes| Complete[Done]
+  subgraph Flow1
+    Valid -->|yes| Save[Save]
+    Valid -->|no| Error[Error]
+    Save --> Notify[Notify]
+  end
+  subgraph Flow2
+    Notify --> Update[Update]
+    Update --> Views[Views]
+  end
+  subgraph Flow3
+    Views --> Loop{Done?}
+    Loop -->|no| Status[Update]
+    Loop -->|yes| Done[Complete]
+    Status --> Loop
+  end
 
-  class Start,Create,Save,Notify,Update,Views,UpdateStatus,Complete,Error small
+  class Start,Create,Save,Error,Notify,Update,Views,Status,Done small
+  
+  %% Adjust layout to be more compact with 3:4 ratio
 
 ``` 

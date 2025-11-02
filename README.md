@@ -463,8 +463,8 @@ flowchart TB
 Activity diagram (Mermaid):
 
 ```mermaid
-%%{init: {"theme":"base","flowchart": {"nodeSpacing": 16, "rankSpacing": 16, "curve":"basis"}, "themeVariables": {"fontSize": "11px"}}}%%
-flowchart LR
+%%{init: {"theme":"base","flowchart": {"nodeSpacing": 20, "rankSpacing": 20, "curve":"basis"}, "themeVariables": {"fontSize": "11px"}}}%%
+flowchart TD
   Start([Start]) --> Create[Create]
   CreateTask --> IsValid{Is task valid?}
   
