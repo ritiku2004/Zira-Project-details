@@ -2,23 +2,18 @@ flowchart LR
 ```mermaid
 %% Compact slide-friendly activity diagram
 %% Use init to reduce node/rank spacing and a small font class
-%%{init: {"theme":"base","flowchart": {"nodeSpacing": 16, "rankSpacing": 16, "curve":"basis"}, "themeVariables": {"fontSize": "10px", "fontFamily": "arial"}}}%%
+%%{init: {"theme":"base", "flowchart": {"nodeSpacing": 10, "rankSpacing": 10}, "themeVariables": {"fontSize": "10px", "fontFamily": "arial", "primaryColor": "#000000", "primaryTextColor": "#000000", "lineColor": "#000000", "tertiaryColor": "#fff"}}}%%
 flowchart LR
-  classDef small font-size:10px,font-family:arial;
+  classDef basic fill:#fff,stroke:#000,color:#000,font-size:10px
+  classDef diamond fill:#fff,stroke:#000,color:#000,font-size:10px
 
-  subgraph Row1
-    Start([Start]) --> Create[Create] --> Valid{Valid?}
-    Valid -->|yes| Save[Save] --> Notify[Notify]
-    Valid -->|no| Error[Error]
-  end
-  subgraph Row2
-    Notify --> Update[Update] --> Views[Views] --> Loop{Done?}
-    Loop -->|yes| Done[Complete]
-    Loop -->|no| Status[Update]
-    Status --> Loop
-  end
+  Start([→]) --> Task[Task] --> Valid{Valid?}
+  Valid -->|Y| Save[Save]
+  Valid -->|N| Start
+  Save --> Done([→])
 
-  class Start,Create,Save,Error,Notify,Update,Views,Status,Done small
+  class Start,Task,Save basic
+  class Valid diamond
   
   %% Compact 2-row layout to minimize vertical height
   

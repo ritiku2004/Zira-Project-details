@@ -1,13 +1,12 @@
-%%{init: {"theme":"base","flowchart": {"nodeSpacing": 16, "rankSpacing": 16, "curve":"basis"}, "themeVariables": {"fontSize": "11px"}}}%%
+%%{init: {"theme":"base", "flowchart": {"nodeSpacing": 10, "rankSpacing": 10}, "themeVariables": {"fontSize": "11px", "fontFamily": "arial", "primaryColor": "#000000", "primaryTextColor": "#000000", "lineColor": "#000000", "tertiaryColor": "#fff"}}}%%
 flowchart LR
-  subgraph Row1
-    Start([Start]) --> Create[Create] --> Valid{Valid?}
-    Valid -->|Yes| Save[Save] --> Notify[Notify]
-    Valid -->|No| Error[Error]
-  end
-  subgraph Row2
-    Notify --> Update[Update] --> Views[Views] --> Loop{Done?}
-    Loop -->|Yes| Done[Complete]
-    Loop -->|No| Status[Update]
-    Status --> Loop
-  end
+  classDef basic fill:#fff,stroke:#000,color:#000,font-size:11px
+  classDef diamond fill:#fff,stroke:#000,color:#000,font-size:11px
+
+  Start([→]) --> Task[Task] --> Valid{Valid?}
+  Valid -->|Y| Save[Save]
+  Valid -->|N| Start
+  Save --> Done([→])
+
+  class Start,Task,Save basic
+  class Valid diamond
