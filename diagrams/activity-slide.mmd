@@ -1,12 +1,22 @@
 flowchart LR
-  Start([Start]) --> Create[Create task]
+```mermaid
+%% Compact slide-friendly activity diagram
+%% Use init to reduce node/rank spacing and a small font class
+%%{init: {"theme":"base","flowchart": {"nodeSpacing": 24, "rankSpacing": 24, "curve":"linear"}}}%%
+flowchart LR
+  classDef small font-size:12px;
+
+  Start([Start]) --> Create[Create]
   Create --> Valid{Valid?}
-  Valid -->|yes| Save[Save task]
-  Valid -->|no| Error[Show error]
-  Save --> Notify[Notify assignee]
-  Notify --> Update[Update board]
-  Update --> Views[Show in views]
+  Valid -->|yes| Save[Save]
+  Valid -->|no| Error[Error]
+  Save --> Notify[Notify]
+  Notify --> Update[Update]
+  Update --> Views[Views]
   Views --> Loop{Done?}
-  Loop -->|no| UpdateStatus[Update status]
-  Loop -->|yes| Complete[Complete task]
-  %% compact, horizontal activity flow
+  Loop -->|no| UpdateStatus[Upd.]
+  Loop -->|yes| Complete[Done]
+
+  class Start,Create,Save,Notify,Update,Views,UpdateStatus,Complete,Error small
+
+``` 
